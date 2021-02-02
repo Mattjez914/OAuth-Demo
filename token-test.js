@@ -1,0 +1,36 @@
+const jwt = require('jsonwebtoken')
+const jwkToPem = require('jwk-to-pem')
+
+const access_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpSY080bnhzNWpnYzhZZE43STJoTE80Vl9xbDFiZG9pTVhtY1lnSG00SHMifQ.eyJ2ZXJzaW9uIjpudWxsLCJqdGkiOiJmZ35GSV9SZ3Y2Q1h0ODdxbFpoTVgiLCJzdWIiOiIxMTA4MDM4MTkiLCJpc3MiOiJodHRwczovL3JlYWx0eS1vbmUtZGV2Lm9uZWxvZ2luLmNvbS9vaWRjLzIiLCJpYXQiOjE2MDQ2MTQ0NzYsImV4cCI6MTYwNDYxNTA3Niwic2NvcGUiOiJvcGVuaWQgem9uZToqIG9mZmxpbmVfYWNjZXNzIHByb2ZpbGUgZ3JvdXBzIiwiYXVkIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC9hcGkiXSwiYXpwIjoiYmI3ZTc3ZTAtZWNhYS0wMTM4LTAwYTQtMDY2ZDljNTlkMDA3MTc4NDcwIn0.Hn_kZ3-g08Ay98iIVfj6gRRQhiFrlxsjbo106O76MRYE5HO0ShIs7nKKJ1CmMbqAQ4elbqQ0X0poy2fT-1F47PvenXkYaWFkCtrn8t4yjm2FIqCHOySdB7eMfUbHwK_AekxUcGR837yM_Dy8sjMLln1rrDHGYHVBQy6UN_g600xZB2HrsP5i4G1pXNmFxNm1gFocu63rwSG0Nh5KIchNujtHSroGQpQc0bJLZLDvCWqSksTZCDLMrJ-W9PjHbWFouD_N0f344OyPv0BnJVoMzEL62fKS22uDA9xXIy8S5qKWcPIhrDVfjC5c9NzFAanLILa96U8FWzdfPJbkq2sWCQ"
+const id_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkpSY080bnhzNWpnYzhZZE43STJoTE80Vl9xbDFiZG9pTVhtY1lnSG00SHMifQ.eyJzdWIiOiIxMTA4MDM4MTkiLCJlbWFpbCI6Im1hdHRoZXcuc3RvY2t0b25AcmVhbHR5b25lZ3JvdXAuY29tIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWF0dGhldy5zdG9ja3RvbkByZWFsdHlvbmVncm91cC5jb20iLCJuYW1lIjoiTWF0dGhldyBTdG9ja3RvbiIsInVwZGF0ZWRfYXQiOjE2MDQ2MTQ0NzYsImdpdmVuX25hbWUiOiJNYXR0aGV3IiwiZmFtaWx5X25hbWUiOiJTdG9ja3RvbiIsImF1ZCI6ImJiN2U3N2UwLWVjYWEtMDEzOC0wMGE0LTA2NmQ5YzU5ZDAwNzE3ODQ3MCIsImV4cCI6MTYwNDYyMTY3NiwiaWF0IjoxNjA0NjE0NDc2LCJpc3MiOiJodHRwczovL3JlYWx0eS1vbmUtZGV2Lm9uZWxvZ2luLmNvbS9vaWRjLzIifQ.d3Mo98BsF4glu_bCF6OiaXltC6qH__5858sK270_i_ldlBTt7UYcaaDrniKi7fSoHZzLKg41HTY4CNBn610of6nzOGZB-K24nY49loGhPnvWxDv7ZsOT8OYv3m78nMlrNy2TfUhR2Kter6fdKB5SmV5KhE2gwPbLxaKxyR970Zab23SNhzfe7Aji5WqiVMknwxy-r5eRPWFZoVKzIbf2vpNKIgmzp1LZVeVHKqOjhgi1ePbEG76nQVKwpoTq31IAEIHPagB-Y0X3Mc6S2fbTFmE44FxMrFI4shz8D3y7WrxYvf7zr5SvlEIB5IA_2uWGS63zG0OfDDPQEO-s4flkBA"
+const jwk = {
+  "kty": "RSA",
+  "kid": "JRcO4nxs5jgc8YdN7I2hLO4V_ql1bdoiMXmcYgHm4Hs",
+  "use": "sig",
+  "n": "z8fZszkUNh1y1iSI6ZCkrwoZx1ZcFuQEngI8G_9VPjJXupqbgXedsV0YqDzQzYmdXd_lLb_OYWdyAP1FV6d2d4PfVjw4rGLqgYN5hEPFYqDEusiKtXyeh38xl37Nb8LGTX1qdstZjcXRo2YQ64W4UyuMko_TGOCxRNJg1fAfxRt1yV_ZeFV_93BMNjubV2D7kvpzaStJmYJi8A6QHqaqHaQkxAvYhJVi9XDajD3vvUlTVyOjURAnuaByA749glGBio5N9AfFTnYbHbeBOK3VJi6EJZzsuj3-5P4GUTYnSfrScs_kblaoeqt4GkExJqMZXGJTfGnX2UbYAjGHSTAoQw",
+  "e": "AQAB"
+}
+
+
+try {
+  let pem = jwkToPem(jwk)
+  let decodedAcccess = jwt.verify(access_token, pem)
+  let decodedId = jwt.verify(id_token, pem)
+
+  console.log(decodedAcccess)
+  console.log(decodedId)
+}
+catch (err) {
+  console.log(err)
+}
+
+// let clientId = "bb7e77e0-ecaa-0138-00a4-066d9c59d007178470"
+
+// let clientSecret = "743f41930562668598a6e0eac3cd9ded95dd8d46335e3d26dcd0233689d01822"
+
+// let encoded = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+
+// let postmanEncoded = 'YmI3ZTc3ZTAtZWNhYS0wMTM4LTAwYTQtMDY2ZDljNTlkMDA3MTc4NDcwOjc0M2Y0MTkzMDU2MjY2ODU5OGE2ZTBlYWMzY2Q5ZGVkOTVkZDhkNDYzMzVlM2QyNmRjZDAyMzM2ODlkMDE4MjI='
+// let decodedPost = Buffer.from(postmanEncoded, 'base64').toString('ascii').split(':')
+// console.log(encoded)
+// console.log(decodedPost)
